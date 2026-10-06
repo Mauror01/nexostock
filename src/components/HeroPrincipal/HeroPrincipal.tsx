@@ -1,4 +1,5 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
+import ConfiguradorStock from "../ConfiguradorStock/ConfiguradorStock";
 
 const HeroPrincipal = () => {
   return (
@@ -19,9 +20,13 @@ const HeroPrincipal = () => {
               y mantener organizada la información de tu inventario.
             </p>
 
-            <Button href="#funciones">
-              Explorar funciones
-            </Button>
+            <div className="d-flex gap-2 flex-wrap">
+              <Button href="#funciones">
+                Explorar funciones
+              </Button>
+
+              <ConfiguradorStock />
+            </div>
           </Col>
 
           <Col md={5}>
