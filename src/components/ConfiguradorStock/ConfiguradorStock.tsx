@@ -20,18 +20,21 @@ const ConfiguradorStock = () => {
         </Modal.Header>
 
         <Modal.Body>
-          <Form.Label>
+          <Form.Group controlId="limiteStock">
+        <Form.Label>
             Cantidad mínima de productos
-          </Form.Label>
+        </Form.Label>
 
-          <Form.Control
+        <Form.Control
             type="number"
+            name="limiteStock"
             min="0"
             value={limiteStock}
             onChange={(event) =>
-              setLimiteStock(Number(event.target.value))
+                setLimiteStock(Number(event.target.value))
             }
-          />
+        />
+        </Form.Group>
 
           <p className="mt-3 mb-0">
             Se considerará stock bajo cuando haya menos de{" "}
