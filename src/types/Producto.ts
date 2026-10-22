@@ -12,3 +12,13 @@ export type ProductoFormulario = Pick<
   Producto,
   "nombre" | "descripcion" | "precio" | "cantidad" | "categoria"
 >;
+
+export type ActualizacionStock = {
+  id: string;
+  cantidad: number;
+};
+
+export type RespuestaActualizacionStock = {
+  mensaje: string;
+  productos: Producto[];
+};

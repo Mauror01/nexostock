@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect, 
+  useState,
+ } from "react";
 import { 
   Button, 
   Card, 
@@ -6,31 +9,44 @@ import {
   Container, 
   Row,
   Modal,
+  Form,
  } from "react-bootstrap";
 import { 
+  actualizarStock,
   actualizarProducto,
   crearProducto,
   obtenerProductos,
   eliminarProducto, 
+  obtenerProductosPorCategoria,
 } from "../../services/productoService";
-import type { Producto, ProductoFormulario } from "../../types/Producto";
+import type { 
+  ActualizacionStock, 
+  Producto, 
+  ProductoFormulario 
+} from "../../types/Producto";
+
 import ModalProducto from "../ModalProducto/ModalProducto";
 
+import ModalActualizarStock from "../ModalActualizarStock/ModalActualizarStock";
 
 const ListaProductos = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [mostrarModal, setMostrarModal] = useState(false);
-  
+  const [categoriaFiltro, setCategoriaFiltro] = useState("");
+
   const [productoEditado, setProductoEditado] =
     useState<Producto | null>(null);
   
     const [productoAEliminar, setProductoAEliminar] =
     useState<Producto | null>(null);
 
-  const [errorEliminar, setErrorEliminar] =
-    useState<string | null>(null);
+    const [errorEliminar, setErrorEliminar] =
+      useState<string | null>(null);
+
+    const [mostrarModalStock, setMostrarModalStock] =
+      useState(false);
 
   useEffect(() => {
     const cargarProductos = async () => {
@@ -116,6 +132,57 @@ const ListaProductos = () => {
     }
   };
 
+  const filtrarPorCategoria = async () => {
+    if (!categoriaFiltro.trim()) {
+      return;
+    }
+
+    setCargando(true);
+    setError(null);
+
+    try {
+      const productosFiltrados =
+        await obtenerProductosPorCategoria(categoriaFiltro.trim());
+
+      setProductos(productosFiltrados);
+    } catch {
+      setError("No se pudieron filtrar los productos por categoría.");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const mostrarTodos = async () => {
+    setCargando(true);
+    setError(null);
+    setCategoriaFiltro("");
+
+    try {
+      const datos = await obtenerProductos();
+      setProductos(datos);
+    } catch {
+      setError("No se pudieron cargar los productos.");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const guardarStock = async (
+    actualizaciones: ActualizacionStock[],
+  ) => {
+    const respuesta = await actualizarStock(actualizaciones);
+
+    setProductos((anteriores) =>
+      anteriores.map((producto) => {
+        const actualizado = respuesta.productos.find(
+          (item) => item._id === producto._id,
+        );
+
+        return actualizado ?? producto;
+      }),
+    );
+  };
+
   return (
     <section className="py-5">
       <Container>
@@ -127,17 +194,34 @@ const ListaProductos = () => {
               Información obtenida directamente desde la API de NexoStock.
             </p>
           </div>
+          
+
+          <div className="d-flex gap-2">
+            <Button
+              variant="outline-primary"
+              onClick={() => setMostrarModalStock(true)}
+           >
+              Actualizar stock
+            </Button>
 
           <Button onClick={abrirAgregar}>
             Agregar producto
           </Button>
         </div>
+      </div>
 
         <ModalProducto
           mostrar={mostrarModal}
           producto={productoEditado}
           onCerrar={cerrarModal}
           onGuardar={guardarProducto}
+        />
+
+        <ModalActualizarStock
+          mostrar={mostrarModalStock}
+          productos={productos}
+          onCerrar={() => setMostrarModalStock(false)}
+          onGuardar={guardarStock}
         />
 
         <Modal
@@ -176,6 +260,32 @@ const ListaProductos = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        <div className="d-flex flex-wrap gap-2 mb-4">
+          <Form.Control
+            type="text"
+            placeholder="Filtrar por categoría"
+            value={categoriaFiltro}
+            onChange={(event) =>
+              setCategoriaFiltro(event.target.value)
+            }
+            style={{ maxWidth: "300px" }}
+          />
+
+          <Button
+            variant="outline-primary"
+            onClick={filtrarPorCategoria}
+          >
+            Filtrar
+          </Button>
+
+          <Button
+            variant="outline-secondary"
+            onClick={mostrarTodos}
+          >
+           Mostrar todos
+          </Button>
+        </div>
 
         {cargando && <p>Cargando productos...</p>}
 
