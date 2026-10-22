@@ -1,15 +1,17 @@
+import { Route, Routes } from "react-router-dom";
 import BarraNavegacion from "./components/BarraNavegacion/BarraNavegacion";
-import HeroPrincipal from "./components/HeroPrincipal/HeroPrincipal";
-import SeccionFunciones from "./components/SeccionFunciones/SeccionFunciones";
-import ListaProductos from "./components/ListaProductos/ListaProductos";
+import PaginaInicio from "./pages/PaginaInicio";
+import PaginaProductos from "./pages/PaginaProductos";
 
 function App() {
   return (
     <>
       <BarraNavegacion />
-      <HeroPrincipal />
-      <SeccionFunciones />
-      <ListaProductos />
+
+      <Routes>
+        <Route path="/" element={<PaginaInicio />} />
+        <Route path="/productos" element={<PaginaProductos />} />
+      </Routes>
     </>
   );
 }
