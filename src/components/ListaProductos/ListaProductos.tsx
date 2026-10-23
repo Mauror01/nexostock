@@ -187,29 +187,34 @@ const ListaProductos = () => {
   return (
     <section className="py-5">
       <Container>
-        <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div className="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
           <div>
-            <h2 className="fw-bold">Productos del inventario</h2>
+            <p className="text-primary fw-semibold text-uppercase mb-2">
+              Inventario
+            </p>
 
-            <p className="text-muted mb-0">
-              Información obtenida directamente desde la API de NexoStock.
+            <h1 className="fw-bold mb-2">
+              Productos
+            </h1>
+
+            <p className="text-secondary mb-0">
+              Gestioná los productos, cantidades y categorías de tu inventario.
             </p>
           </div>
-          
 
-          <div className="d-flex gap-2">
+          <div className="d-flex flex-wrap gap-2">
             <Button
               variant="outline-primary"
               onClick={() => setMostrarModalStock(true)}
-           >
+            >
               Actualizar stock
             </Button>
 
-          <Button onClick={abrirAgregar}>
-            Agregar producto
-          </Button>
+            <Button onClick={abrirAgregar}>
+              + Agregar producto
+            </Button>
+          </div>
         </div>
-      </div>
 
         <ModalProducto
           mostrar={mostrarModal}
@@ -262,30 +267,33 @@ const ListaProductos = () => {
           </Modal.Footer>
         </Modal>
 
-        <div className="d-flex flex-wrap gap-2 mb-4">
-          <Form.Control
-            type="text"
-            placeholder="Filtrar por categoría"
-            value={categoriaFiltro}
-            onChange={(event) =>
-              setCategoriaFiltro(event.target.value)
-            }
-            style={{ maxWidth: "300px" }}
-          />
+        <div className="bg-white rounded-4 shadow-sm p-3 p-md-4 mb-4">
+          <div className="d-flex flex-wrap gap-2 align-items-center">
+            <Form.Control
+              type="text"
+              placeholder="Buscar por categoría..."
+              value={categoriaFiltro}
+              onChange={(event) =>
+                setCategoriaFiltro(event.target.value)
+              }
+              style={{ maxWidth: "320px" }}
+            />
 
-          <Button
-            variant="outline-primary"
-            onClick={filtrarPorCategoria}
-          >
-            Filtrar
-          </Button>
+            <Button
+              variant="primary"
+              onClick={filtrarPorCategoria}
+            >
+              Filtrar
+            </Button>
 
-          <Button
-            variant="outline-secondary"
-            onClick={mostrarTodos}
-          >
-           Mostrar todos
-          </Button>
+            <Button
+              variant="light"
+              className="border"
+              onClick={mostrarTodos}
+            >
+              Mostrar todos
+            </Button>
+          </div>
         </div>
 
         {cargando && <p>Cargando productos...</p>}
@@ -297,7 +305,7 @@ const ListaProductos = () => {
         )}
 
         {!cargando && !error && productos.length > 0 && (
-          <Row className="g-4">
+          <Row className="g-4 align-items-stretch">
             {productos.map((producto) => (
               <Col md={6} lg={4} key={producto._id}>
                 <TarjetaProducto

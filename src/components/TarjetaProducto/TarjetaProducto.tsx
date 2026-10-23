@@ -25,7 +25,15 @@ const TarjetaProducto = ({
   return (
     <Card className="tarjeta-producto h-100">
       <div className="tarjeta-producto-imagen">
-        <span>{producto.nombre.charAt(0).toUpperCase()}</span>
+        {producto.imagen ? (
+          <img
+            src={producto.imagen}
+            alt={producto.nombre}
+            className="tarjeta-producto-foto"
+          />
+        ) : (
+          <span>{producto.nombre.charAt(0).toUpperCase()}</span>
+        )}
       </div>
 
       <Card.Body>

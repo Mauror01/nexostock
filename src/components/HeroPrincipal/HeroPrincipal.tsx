@@ -1,44 +1,36 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import ConfiguradorStock from "../ConfiguradorStock/ConfiguradorStock";
+import "./HeroPrincipal.css";
 
 const HeroPrincipal = () => {
   return (
-    <section id="inicio" className="py-5">
+    <section id="inicio" className="hero-principal py-5">
       <Container>
-        <Row className="align-items-center g-4">
-          <Col md={7}>
-            <p className="text-uppercase fw-semibold mb-2">
-              NexoStock
-            </p>
+        <Row className="align-items-center">
+          <Col lg={8}>
+            <span className="hero-etiqueta">
+              NEXOSTOCK
+            </span>
 
-            <h1 className="display-4 fw-bold">
-              Tu inventario, organizado en un solo lugar.
+            <h1 className="hero-titulo">
+              Controlá tu inventario de forma simple.
             </h1>
 
-            <p className="lead">
-              Una forma simple de gestionar productos, controlar el stock
-              y mantener organizada la información de tu inventario.
+            <p className="hero-descripcion">
+              Gestioná productos, cantidades y categorías desde un solo lugar
+              y mantené siempre una visión clara de tu stock.
             </p>
 
-            <div className="d-flex gap-2 flex-wrap">
-              <Button href="#funciones">
-                Explorar funciones
-              </Button>
+            <div className="hero-acciones d-flex flex-wrap gap-2">
+              <Link
+                to="/productos"
+                className="btn btn-primary btn-lg"
+              >
+                Ver productos
+              </Link>
 
               <ConfiguradorStock />
-            </div>
-          </Col>
-
-          <Col md={5}>
-            <div className="border rounded-4 p-4 shadow-sm">
-              <h2 className="h4">
-                Control simple de tu inventario
-              </h2>
-
-              <p className="mb-0">
-                Productos, cantidades y categorías organizados para tener
-                siempre una visión clara de tu stock.
-              </p>
             </div>
           </Col>
         </Row>

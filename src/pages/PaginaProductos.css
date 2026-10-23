@@ -1,0 +1,9 @@
+.pagina-productos {
+  min-height: calc(100vh - 56px);
+  background: #f5f6f8;
+}
+
+.pagina-productos-contenido {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}

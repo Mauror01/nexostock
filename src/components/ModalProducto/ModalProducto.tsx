@@ -42,6 +42,7 @@ const valoresIniciales: ProductoFormulario = {
   precio: 0,
   cantidad: 0,
   categoria: "",
+  imagen: "",
 };
 
 const ModalProducto = ({
@@ -162,6 +163,19 @@ const ModalProducto = ({
             <Form.Control
               name="categoria"
               value={formik.values.categoria ?? ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </Form.Group>
+
+          <Form.Group className="mt-3" controlId="imagen">
+            <Form.Label>URL de imagen</Form.Label>
+
+            <Form.Control
+              type="url"
+              name="imagen"
+              placeholder="https://..."
+              value={formik.values.imagen ?? ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
