@@ -1,0 +1,33 @@
+.tarjeta-producto {
+  border: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tarjeta-producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.tarjeta-producto-imagen {
+  height: 170px;
+  background: linear-gradient(135deg, #e9ecef, #dee2e6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tarjeta-producto-imagen span {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #6c757d;
+}
+
+.tarjeta-producto-precio {
+  font-size: 1.4rem;
+  font-weight: 700;
+}

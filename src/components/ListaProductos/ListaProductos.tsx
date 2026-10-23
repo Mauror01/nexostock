@@ -2,15 +2,14 @@ import {
   useEffect, 
   useState,
  } from "react";
-import { 
-  Button, 
-  Card, 
-  Col, 
-  Container, 
+import {
+  Button,
+  Col,
+  Container,
   Row,
   Modal,
   Form,
- } from "react-bootstrap";
+} from "react-bootstrap";
 import { 
   actualizarStock,
   actualizarProducto,
@@ -28,6 +27,8 @@ import type {
 import ModalProducto from "../ModalProducto/ModalProducto";
 
 import ModalActualizarStock from "../ModalActualizarStock/ModalActualizarStock";
+
+import TarjetaProducto from "../TarjetaProducto/TarjetaProducto";
 
 const ListaProductos = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
@@ -299,46 +300,11 @@ const ListaProductos = () => {
           <Row className="g-4">
             {productos.map((producto) => (
               <Col md={6} lg={4} key={producto._id}>
-                <Card className="h-100 shadow-sm">
-                  <Card.Body>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      {producto.categoria || "Sin categoría"}
-                    </Card.Subtitle>
-
-                    <Card.Title>{producto.nombre}</Card.Title>
-
-                    <Card.Text>
-                      {producto.descripcion || "Sin descripción"}
-                    </Card.Text>
-
-                    <p className="mb-1">
-                      <strong>Precio:</strong> ${producto.precio}
-                    </p>
-
-                    <p className="mb-0">
-                      <strong>Stock:</strong> {producto.cantidad}
-                    </p>
-                  </Card.Body>
-                <Card.Footer className="bg-white border-0">
-                  <div className="d-flex gap-2">
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      onClick={() => abrirEditar(producto)}
-                    >
-                      Editar
-                    </Button>
-
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      onClick={() => setProductoAEliminar(producto)}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </Card.Footer>
-                </Card>
+                <TarjetaProducto
+                  producto={producto}
+                  onEditar={abrirEditar}
+                  onEliminar={setProductoAEliminar}
+                />
               </Col>
             ))}
           </Row>
