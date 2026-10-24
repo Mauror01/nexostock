@@ -35,6 +35,7 @@ const ListaProductos = () => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [versionModalStock, setVersionModalStock] = useState(0);
   const [categoriaFiltro, setCategoriaFiltro] = useState("");
 
   const [productoEditado, setProductoEditado] =
@@ -184,6 +185,11 @@ const ListaProductos = () => {
     );
   };
 
+  const abrirModalStock = () => {
+    setVersionModalStock((version) => version + 1);
+    setMostrarModalStock(true);
+  };
+
   return (
     <section className="py-5">
       <Container>
@@ -205,7 +211,7 @@ const ListaProductos = () => {
           <div className="d-flex flex-wrap gap-2">
             <Button
               variant="outline-primary"
-              onClick={() => setMostrarModalStock(true)}
+              onClick={abrirModalStock}
             >
               Actualizar stock
             </Button>
@@ -224,6 +230,7 @@ const ListaProductos = () => {
         />
 
         <ModalActualizarStock
+          key={versionModalStock}
           mostrar={mostrarModalStock}
           productos={productos}
           onCerrar={() => setMostrarModalStock(false)}

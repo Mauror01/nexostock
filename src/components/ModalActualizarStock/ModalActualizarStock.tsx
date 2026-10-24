@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import type {
   ActualizacionStock,
@@ -20,25 +20,18 @@ const ModalActualizarStock = ({
   onCerrar,
   onGuardar,
 }: Props) => {
-  const [cantidades, setCantidades] =
-    useState<Record<string, number>>({});
+    const [cantidades, setCantidades] = useState<Record<string, number>>(
+      () =>
+        Object.fromEntries(
+          productos.map((producto) => [
+            producto._id,
+            producto.cantidad,
+          ]),
+        ) as Record<string, number>,
+    );
 
-  const [error, setError] = useState<string | null>(null);
-  const [guardando, setGuardando] = useState(false);
-
-  useEffect(() => {
-    if (mostrar) {
-      const valores = Object.fromEntries(
-        productos.map((producto) => [
-          producto._id,
-          producto.cantidad,
-        ]),
-      );
-
-      setCantidades(valores);
-      setError(null);
-    }
-  }, [mostrar, productos]);
+    const [error, setError] = useState<string | null>(null);
+    const [guardando, setGuardando] = useState(false);
 
   const cambiarCantidad = (
     id: string,
